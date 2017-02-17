@@ -81,7 +81,7 @@ class mp_userbind_bind_signup implements platform_interface {
        		}
        		$user_info = RC_Api::api('user', 'add_user', array('username' => $username, 'password' => $password, 'email' => $email, 'sex'=>$sex, 'reg_time'=>$reg_time));
             if (is_ecjia_error($user_info)) {
-            	return ecjia_front::$controller->showmessage($user_info->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            	ecjia_front::$controller->showmessage($user_info->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             } else {
                 $user_id = $user_info['user_id'];
             	$wechat_user->setUserId($user_id);

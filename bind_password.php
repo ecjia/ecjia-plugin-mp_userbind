@@ -65,18 +65,18 @@ class mp_userbind_bind_password implements platform_interface {
     	$confirm_password = trim($_POST['confirm_password']);
     	
     	if(!empty($_POST['again']) && empty($oldpassword)) {
-    		return ecjia_front::$controller->showmessage('请输入原密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		ecjia_front::$controller->showmessage('请输入原密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     	
     	if(empty($newpassword)) {
-    		return ecjia_front::$controller->showmessage('请设输入新密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		ecjia_front::$controller->showmessage('请设输入新密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     
     	if(empty($confirm_password)) {
-    		return ecjia_front::$controller->showmessage('请输入再次确认密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		ecjia_front::$controller->showmessage('请输入再次确认密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
         if($newpassword != $confirm_password) {
-        	return ecjia_front::$controller->showmessage('两次密码输入不一致，请重新设置密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	ecjia_front::$controller->showmessage('两次密码输入不一致，请重新设置密码！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         } else {
         	if(!empty($oldpassword)){
         		$result = RC_Api::api('user', 'edit_user', array('new_password' => $newpassword, 'user_id'=>$ect_uid, 'old_password' => $oldpassword));
@@ -91,9 +91,9 @@ class mp_userbind_bind_password implements platform_interface {
         	}
         	
         	if (is_ecjia_error($result)) {
-        		return ecjia_front::$controller->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		ecjia_front::$controller->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	} else {
-        		return ecjia_front::$controller->showmessage('设置密码成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' => RC_Uri::url('platform/plugin/show', array('handle' => 'mp_userbind/bind_init', 'openid' => $openid, 'uuid' => $uuid,'ect_id'=>$ect_uid))));
+        		ecjia_front::$controller->showmessage('设置密码成功！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS,array('pjaxurl' => RC_Uri::url('platform/plugin/show', array('handle' => 'mp_userbind/bind_init', 'openid' => $openid, 'uuid' => $uuid,'ect_id'=>$ect_uid))));
         	}
         }
 	}

@@ -63,11 +63,11 @@ class mp_userbind_bind_signin implements platform_interface {
         $password = trim($_POST['password']);
         
         if (empty($user_name)) {
-        	 return ecjia_front::$controller->showmessage('用户名不能为空！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	 ecjia_front::$controller->showmessage('用户名不能为空！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         
         if (empty($password)) {
-        	 return ecjia_front::$controller->showmessage('密码不能为空！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	 ecjia_front::$controller->showmessage('密码不能为空！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         //登录逻辑处理
         $user_db = RC_Loader::load_app_model('users_model','user');
@@ -78,11 +78,11 @@ class mp_userbind_bind_signin implements platform_interface {
         if ($row) {
         	if (!empty($row['ec_salt'])) {
         		if (!($row['user_name'] == $user_name && $row['password'] == md5(md5($password) . $row['ec_salt']))) {
-        			 return ecjia_front::$controller->showmessage('您输入账号信息不正确，绑定失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        			 ecjia_front::$controller->showmessage('您输入账号信息不正确，绑定失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         		}
         	} else {
         		if (!($row['user_name'] == $user_name && $row['password'] == md5($password))) {
-        			 return ecjia_front::$controller->showmessage('您输入账号信息不正确，绑定失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        			 ecjia_front::$controller->showmessage('您输入账号信息不正确，绑定失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         		}
         	}
         	RC_Loader::load_app_class('wechat_user', 'wechat', false);
@@ -104,7 +104,7 @@ class mp_userbind_bind_signin implements platform_interface {
         	ecjia_front::$controller->assign_lang();
         	ecjia_front::$controller->display($tplpath);
         } else {
-        	return ecjia_front::$controller->showmessage('您输入账号信息不正确，绑定失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	ecjia_front::$controller->showmessage('您输入账号信息不正确，绑定失败！', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
     }
     
