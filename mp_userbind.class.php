@@ -84,24 +84,25 @@ class mp_userbind extends platform_abstract
     	$ect_uid = $wechat_user->getUserId();
     	$unionid = $wechat_user->getUnionid();
     	$user_id = $connect_db->where(array('open_id' => $unionid, 'connect_code'=>'sns_wechat'))->get_field('user_id');
-    	if(!empty($ect_uid)){
-    		$query = $connect_db->where(array('open_id'=>$unionid, 'connect_code'=>'sns_wechat'))->count();
-    		if($query > 0){
-    			$connect_db->where(array('open_id' => $unionid, 'connect_code'=>'sns_wechat'))->update(array('user_id' => $ect_uid));
-    		}else{
-    			$data['connect_code'] = 'sns_wechat';
-    			$data['user_id'] = $ect_uid;
-    			$data['is_admin'] = 0;
-    			$data['open_id'] = $unionid;
-    			$data['create_at'] = $time;
-    			$connect_db->insert($data);
-    		}
-    	}
     	$username = $user_db->where(array('user_id' => $user_id))->get_field('user_name');
+    	
     	$hasbd = "您已拥有帐号，用户名为【".$username."】，<a href = '".RC_Uri::url('platform/plugin/show', array('handle' => 'mp_userbind/bind_init', 'openid' => $openid, 'uuid' => $_GET['uuid']))."'>点击此处</a>可以设置密码";
     	$nobd = "还未绑定，需<a href = '".RC_Uri::url('platform/plugin/show', array('handle' => 'mp_userbind/bind_init', 'openid' => $openid, 'uuid' => $_GET['uuid']))."'>点击此处</a>进行绑定";
     	
     	if (empty($user_id)) {
+    		if(!empty($ect_uid)){
+    			$query = $connect_db->where(array('open_id'=>$unionid, 'connect_code'=>'sns_wechat'))->count();
+    			if($query > 0){
+    				$connect_db->where(array('open_id' => $unionid, 'connect_code'=>'sns_wechat'))->update(array('user_id' => $ect_uid));
+    			}else{
+    				$data['connect_code'] = 'sns_wechat';
+    				$data['user_id'] = $ect_uid;
+    				$data['is_admin'] = 0;
+    				$data['open_id'] = $unionid;
+    				$data['create_at'] = $time;
+    				$connect_db->insert($data);
+    			}
+    		}
     		$content = array(
     			'ToUserName' => $this->from_username,
     			'FromUserName' => $this->to_username,
