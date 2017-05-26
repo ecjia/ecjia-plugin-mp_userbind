@@ -87,11 +87,11 @@ class mp_userbind_bind_signup implements platform_interface {
        	} else {
        		$user_id = $user_info['user_id'];
        		//$wechat_user->setUserId($user_id);
-       		$query = $connect_db->where(array('open_id'=>$unionid))->count();
+       		$query = $connect_db->where(array('open_id'=>$unionid,'connect_code'=>'sns_wechat'))->count();
        		if($query > 0){
-       			$connect_db->where(array('open_id' => $unionid))->update(array('user_id' => $user_id));
+       			$connect_db->where(array('open_id' => $unionid, 'connect_code'=>'sns_wechat'))->update(array('user_id' => $user_id));
        		}else{
-       			$data['connect_code'] = 'sns_wechat_platform';
+       			$data['connect_code'] = 'sns_wechat';
        			$data['user_id'] = $user_id;
        			$data['is_admin'] = 0;
        			$data['open_id'] = $unionid;

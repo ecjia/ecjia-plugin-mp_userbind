@@ -63,6 +63,9 @@ class mp_userbind extends platform_abstract
 		return array();
 	}
 	
+
+
+	
     public function event_reply() {
     	$wechatuser_db = RC_Loader::load_app_model('wechat_user_model', 'wechat');
     	$user_db = RC_Loader::load_app_model('users_model', 'user');
@@ -82,11 +85,11 @@ class mp_userbind extends platform_abstract
     	$unionid = $wechat_user->getUnionid();
     	$user_id = $connect_db->where(array('open_id' => $unionid))->get_field('user_id');
     	if(!empty($ect_uid)){
-    		$query = $connect_db->where(array('open_id'=>$unionid))->count();
+    		$query = $connect_db->where(array('open_id'=>$unionid, 'connect_code'=>'sns_wechat'))->count();
     		if($query > 0){
-    			$connect_db->where(array('open_id' => $unionid))->update(array('user_id' => $ect_uid));
+    			$connect_db->where(array('open_id' => $unionid, 'connect_code'=>'sns_wechat'))->update(array('user_id' => $ect_uid));
     		}else{
-    			$data['connect_code'] = 'sns_wechat_platform';
+    			$data['connect_code'] = 'sns_wechat';
     			$data['user_id'] = $ect_uid;
     			$data['is_admin'] = 0;
     			$data['open_id'] = $unionid;
