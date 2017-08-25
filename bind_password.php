@@ -80,7 +80,7 @@ class mp_userbind_bind_password implements platform_interface {
         } else {
         	if(!empty($oldpassword)){
         		$result = RC_Api::api('user', 'edit_user', array('new_password' => $newpassword, 'user_id'=>$ect_uid, 'old_password' => $oldpassword));
-        	}else {
+        	} else {
         		$result = RC_Api::api('user', 'edit_user', array('new_password' => $newpassword, 'user_id'=>$ect_uid));
         		$data['object_type'] = 'ecjia.user';
         		$data['object_group'] = 'user';
