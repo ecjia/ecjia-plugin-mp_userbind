@@ -81,12 +81,15 @@ class mp_userbind extends platform_abstract
     	$connect_user = new \Ecjia\App\Connect\ConnectUser('sns_wechat', $unionid, 'user');
     	$getUserId = $connect_user->getUserId();
     	$username = RC_DB::TABLE('users')->where('user_id', $getUserId)->pluck('user_name');
+//     	$hasbd = "您已拥有帐号，用户名为【".$username."】，<a href = '".RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid))."'>点击此处</a>可进入用户中心";
+//     	$nobd  = "抱歉，目前您还未进行账号绑定，需<a href = '".RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid))."'>点击此处</a>进行绑定";
+    	 
     	if ($connect_user->checkUser()) {
     		//组合类似模板信息
     		$articles = array();
     		$articles[0]['Title'] = '已绑定';
     		$articles[0]['PicUrl'] = '';
-    		$articles[0]['Description'] = '您已拥有帐号，用户名为【'.$username.'】,点击该链接可进入用户中心';
+    		$articles[0]['Description'] = '您已拥有帐号，用户名为【'.$username.'】点击该链接可进入用户中心';
     		$articles[0]['Url'] = RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid));
     		$count = count($articles);
     		$content = array(
@@ -117,7 +120,7 @@ class mp_userbind extends platform_abstract
     		$articles = array();
     		$articles[0]['Title'] = '未绑定';
     		$articles[0]['PicUrl'] = '';
-    		$articles[0]['Description'] = '抱歉，您目前尚未绑定，需点击该链接进行绑定';
+    		$articles[0]['Description'] = '抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作';
     		$articles[0]['Url'] = RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid));
     		
     		$count = count($articles);
