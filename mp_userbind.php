@@ -77,7 +77,12 @@ class plugin_mp_userbind {
     }
 }
 
+Ecjia_PluginManager::extend('mp_userbind', function() {
+    require_once RC_Plugin::plugin_dir_path(__FILE__) . 'mp_userbind.class.php';
+    return new mp_userbind();
+});
+
 RC_Plugin::register_activation_hook(__FILE__, array('plugin_mp_userbind', 'install'));
 RC_Plugin::register_deactivation_hook(__FILE__, array('plugin_mp_userbind', 'uninstall'));
-RC_Hook::add_filter('platform_factory_adapter_instance', array( 'plugin_mp_userbind', 'adapter_instance' ), 10, 2);
+// RC_Hook::add_filter('platform_factory_adapter_instance', array( 'plugin_mp_userbind', 'adapter_instance' ), 10, 2);
 // end
