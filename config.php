@@ -47,6 +47,8 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 return array(
     'ext_code'      => 'mp_userbind',
+    
+    'ext_icon'      => 'images/icon_userbind.png',
 			
 	'forms' => array(
 	    array('name' => 'point_status',       'type' => 'radiobox',    'value' => ''),

@@ -51,7 +51,6 @@ defined('IN_ECJIA') or exit('No permission resources.');
 
 use Ecjia\App\Platform\Plugin\PlatformAbstract;
 
-// RC_Loader::load_app_class('platform_abstract', 'platform', false);
 class mp_userbind extends PlatformAbstract
 {   
     /**
@@ -86,16 +85,18 @@ class mp_userbind extends PlatformAbstract
         return $this->loadPluginData(RC_Plugin::plugin_dir_path(__FILE__) . '/languages/'.$locale.'/plugin.lang.php', $key, $default);
     }
     
-// 	/**
-// 	 * 获取插件配置信息
-// 	 */
-// 	public function local_config() {
-// 		$config = include(RC_Plugin::plugin_dir_path(__FILE__) . 'config.php');
-// 		if (is_array($config)) {
-// 			return $config;
-// 		}
-// 		return array();
-// 	}
+    /**
+     * 获取iconUrl
+     * {@inheritDoc}
+     * @see \Ecjia\App\Platform\Plugin\PlatformAbstract::getPluginIconUrl()
+     */
+    public function getPluginIconUrl()
+    {
+        if ($this->loadConfig('ext_icon')) {
+            return RC_Plugin::plugin_dir_url(__FILE__) . $this->loadConfig('ext_icon');
+        }
+        return '';
+    }
 
     public function event_reply() {
     	$connect_db = RC_Loader::load_app_model('connect_user_model', 'connect');
