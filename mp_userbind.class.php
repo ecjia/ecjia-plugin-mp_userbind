@@ -108,7 +108,7 @@ class mp_userbind extends PlatformAbstract
     
     	$time   = RC_Time::gmtime();
     	$openid = $this->getMessage()->get('FromUserName');
-//     	$uuid   = trim($_GET['uuid']);
+    	$uuid   = trim($_GET['uuid']);
     	
 //     	$account = platform_account::make($uuid);
 //     	$wechat_id = $account->getAccountID();
