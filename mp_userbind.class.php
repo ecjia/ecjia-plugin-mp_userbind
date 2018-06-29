@@ -106,11 +106,14 @@ class mp_userbind extends PlatformAbstract
     	RC_Loader::load_app_class('wechat_user', 'wechat', false);
     
     	$time   = RC_Time::gmtime();
-    	$openid = $this->from_username;
-    	$uuid   = trim($_GET['uuid']);
+    	$openid = $this->getMessage()->get('FromUserName');
+//     	$uuid   = trim($_GET['uuid']);
     	
-    	$account = platform_account::make($uuid);
-    	$wechat_id = $account->getAccountID();
+//     	$account = platform_account::make($uuid);
+//     	$wechat_id = $account->getAccountID();
+    	
+    	$wechat_id = with(new \Ecjia\App\Wechat\WechatUUID())->getWechatID();
+    	
     	$wechat_user = new wechat_user($wechat_id, $openid);
     	$ect_uid = $wechat_user->getUserId();
     	$unionid = $wechat_user->getUnionid();
@@ -119,22 +122,31 @@ class mp_userbind extends PlatformAbstract
     	$username = RC_DB::TABLE('users')->where('user_id', $getUserId)->pluck('user_name');
     	
     	if ($connect_user->checkUser()) {
-    		//组合类似模板信息
-    		$articles = array();
-    		$articles[0]['Title'] = '已绑定';
-    		$articles[0]['PicUrl'] = '';
-    		$articles[0]['Description'] = '您已拥有帐号，用户名为【'.$username.'】点击该链接可进入用户中心哦';
-    		$articles[0]['Url'] = RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid));
-    		$count = count($articles);
-    		$content = array(
-    			'ToUserName'    => $this->from_username,
-    			'FromUserName'  => $this->to_username,
-    			'CreateTime'    => SYS_TIME,
-    			'MsgType'       => 'news',
-    			'ArticleCount'	=> $count,
-    			'Articles'		=> $articles
-    		);
-    	} else{ 
+//     		//组合类似模板信息
+//     		$articles = array();
+//     		$articles[0]['Title'] = '已绑定';
+//     		$articles[0]['PicUrl'] = '';
+//     		$articles[0]['Description'] = '您已拥有帐号，用户名为【'.$username.'】点击该链接可进入用户中心哦';
+//     		$articles[0]['Url'] = RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid));
+//     		$count = count($articles);
+//     		$content = array(
+//     			'ToUserName'    => $this->from_username,
+//     			'FromUserName'  => $this->to_username,
+//     			'CreateTime'    => SYS_TIME,
+//     			'MsgType'       => 'news',
+//     			'ArticleCount'	=> $count,
+//     			'Articles'		=> $articles
+//     		);
+    		
+    		$content = [
+    		    'title' => '已绑定',
+    		    'description' => '您已拥有帐号，用户名为【'.$username.'】点击该链接可进入用户中心哦',
+    		    'url' => RC_Uri::url('wechat/mobile_profile/init',array('openid' => $openid, 'uuid' => $uuid)),
+    		    'image' => '',
+    		];
+    	} 
+    	//未绑定用户
+    	else { 
     		//合并ect_uid旧的数据处理
     		if(!empty($ect_uid)){
     			$query = $connect_db->where(array('open_id'=>$unionid, 'connect_code'=>'sns_wechat'))->count();
@@ -151,7 +163,7 @@ class mp_userbind extends PlatformAbstract
     		}
     		
     		//组合类似模板信息
-    		$articles = array();
+//     		$articles = array();
 //     		$articles[0]['Title'] = '未绑定';
 //     		$articles[0]['PicUrl'] = '';
 //     		$articles[0]['Description'] = '抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作';
@@ -174,9 +186,9 @@ class mp_userbind extends PlatformAbstract
     		    'image' => '',
     		];
     		
-    		return WechatRecord::News_reply($this->getMessage(), $content['title'], $content['description'], $content['url'], $content['image']);
     	}
-    	return $content;
+    	
+    	return WechatRecord::News_reply($this->getMessage(), $content['title'], $content['description'], $content['url'], $content['image']);
     }
     
     
