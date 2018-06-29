@@ -50,6 +50,7 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 
 use Ecjia\App\Platform\Plugin\PlatformAbstract;
+use Ecjia\App\Wechat\WechatRecord;
 
 class mp_userbind extends PlatformAbstract
 {   
@@ -151,20 +152,29 @@ class mp_userbind extends PlatformAbstract
     		
     		//组合类似模板信息
     		$articles = array();
-    		$articles[0]['Title'] = '未绑定';
-    		$articles[0]['PicUrl'] = '';
-    		$articles[0]['Description'] = '抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作';
-    		$articles[0]['Url'] = RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid));
+//     		$articles[0]['Title'] = '未绑定';
+//     		$articles[0]['PicUrl'] = '';
+//     		$articles[0]['Description'] = '抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作';
+//     		$articles[0]['Url'] = RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid));
     		
-    		$count = count($articles);
-    		$content = array(
-    			'ToUserName'    => $this->from_username,
-    			'FromUserName'  => $this->to_username,
-    			'CreateTime'    => SYS_TIME,
-    			'MsgType'       => 'news',
-    			'ArticleCount'	=> $count,
-    			'Articles'		=> $articles
-    		);
+//     		$count = count($articles);
+//     		$content = array(
+//     			'ToUserName'    => $this->from_username,
+//     			'FromUserName'  => $this->to_username,
+//     			'CreateTime'    => SYS_TIME,
+//     			'MsgType'       => 'news',
+//     			'ArticleCount'	=> $count,
+//     			'Articles'		=> $articles
+//     		);
+    		
+    		$content = [
+    		    'title' => '未绑定',
+    		    'description' => '抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作',
+    		    'url' => RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid)),
+    		    'image' => '',
+    		];
+    		
+    		return WechatRecord::News_reply($this->getMessage(), $content['title'], $content['description'], $content['url'], $content['image']);
     	}
     	return $content;
     }
