@@ -51,6 +51,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 
 use Ecjia\App\Platform\Plugin\PlatformAbstract;
 use Ecjia\App\Wechat\WechatRecord;
+use Ecjia\App\Wechat\WechatUser;
 
 class mp_userbind extends PlatformAbstract
 {   
@@ -114,12 +115,10 @@ class mp_userbind extends PlatformAbstract
     	
     	$wechat_id = with(new \Ecjia\App\Wechat\WechatUUID())->getWechatID();
     	
-    	$wechat_user = new wechat_user($wechat_id, $openid);
-    	$ect_uid = $wechat_user->getUserId();
+    	$wechat_user = new WechatUser($wechat_id, $openid);
+//     	$ect_uid = $wechat_user->getUserId();
     	$unionid = $wechat_user->getUnionid();
     	$connect_user = new \Ecjia\App\Connect\ConnectUser('sns_wechat', $unionid, 'user');
-    	$getUserId = $connect_user->getUserId();
-    	$username = RC_DB::TABLE('users')->where('user_id', $getUserId)->pluck('user_name');
     	
     	if ($connect_user->checkUser()) {
 //     		//组合类似模板信息
@@ -137,7 +136,10 @@ class mp_userbind extends PlatformAbstract
 //     			'ArticleCount'	=> $count,
 //     			'Articles'		=> $articles
 //     		);
-    		
+
+    	    $getUserId = $connect_user->getUserId();
+    	    $username = RC_DB::TABLE('users')->where('user_id', $getUserId)->pluck('user_name');
+    	    
     		$content = [
     		    'title' => '已绑定',
     		    'description' => '您已拥有帐号，用户名为【'.$username.'】点击该链接可进入用户中心哦',
