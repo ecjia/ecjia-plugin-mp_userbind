@@ -137,8 +137,9 @@ class mp_userbind extends PlatformAbstract
 //     			'Articles'		=> $articles
 //     		);
 
-    	    $getUserId = $connect_user->getUserId();
-    	    $username = RC_DB::TABLE('users')->where('user_id', $getUserId)->pluck('user_name');
+    	    $userid = $connect_user->getUserId();
+    	    $wechat_user->setEcjiaUserId($userid);
+    	    $username = RC_DB::TABLE('users')->where('user_id', $userid)->pluck('user_name');
     	    
     		$content = [
     		    'title' => '已绑定',
