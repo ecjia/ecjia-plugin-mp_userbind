@@ -100,10 +100,15 @@ class mp_userbind extends PlatformAbstract
         return '';
     }
 
-    public function event_reply() {
+    /**
+     * 事件回复
+     * {@inheritDoc}
+     * @see \Ecjia\App\Platform\Plugin\PlatformAbstract::eventReply()
+     */
+    public function eventReply() {
     	$connect_db = RC_Loader::load_app_model('connect_user_model', 'connect');
     	
-    	RC_Loader::load_app_class('platform_account', 'platform', false);
+//     	RC_Loader::load_app_class('platform_account', 'platform', false);
     	RC_Loader::load_app_class('wechat_user', 'wechat', false);
     
     	$time   = RC_Time::gmtime();
