@@ -69,12 +69,6 @@ class plugin_mp_userbind {
         return RC_Api::api('platform', 'plugin_uninstall', $param);
     }
 
-
-    public static function adapter_instance($instance, $config) {
-        require_once RC_Plugin::plugin_dir_path(__FILE__) . 'mp_userbind.class.php';
-        $wechat = new mp_userbind($config);
-        return $wechat;
-    }
 }
 
 Ecjia_PluginManager::extend('mp_userbind', function() {
@@ -84,5 +78,4 @@ Ecjia_PluginManager::extend('mp_userbind', function() {
 
 RC_Plugin::register_activation_hook(__FILE__, array('plugin_mp_userbind', 'install'));
 RC_Plugin::register_deactivation_hook(__FILE__, array('plugin_mp_userbind', 'uninstall'));
-// RC_Hook::add_filter('platform_factory_adapter_instance', array( 'plugin_mp_userbind', 'adapter_instance' ), 10, 2);
 // end
