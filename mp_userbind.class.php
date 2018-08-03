@@ -177,15 +177,17 @@ class mp_userbind extends PlatformAbstract
         $uuid   = $wechatUUID->getUUID();
         $openid = $this->getMessage()->get('FromUserName');
 
-        $wechat_user = new WechatUser($wechat_id, $openid);
-        $unionid = $wechat_user->getUnionid();
-
-        $UnionidUser = $wechat_user->findUnionidUser($unionid);
-        $connect_user = $wechat_user->getConnectUser();
-        $userid = $connect_user->getUserId();
-
         //如果已经有了公众号用户且绑定了同一个开放平台，自动关联原有的用户ID
-        if (!empty($UnionidUser)) {
+        if ($this->hasBindUser()) {
+            $wechat_user = new WechatUser($wechat_id, $openid);
+            $unionid = $wechat_user->getUnionid();
+            $connect_user = $wechat_user->getConnectUser();
+            $userid = $connect_user->getUserId();
+
+            if ($unionid) {
+                $UnionidUser = $wechat_user->findUnionidUser($unionid);
+            }
+
             $wechat_user->setEcjiaUserId($UnionidUser->ect_uid);
 
             //获取用户名
