@@ -182,7 +182,9 @@ class mp_userbind extends PlatformAbstract
             $wechat_user = new WechatUser($wechat_id, $openid);
             $unionid = $wechat_user->getUnionid();
 
-            if (! $wechat_user->getEcjiaUserId()) {
+            $userid = $wechat_user->getEcjiaUserId();
+
+            if (! $userid) {
                 if ($unionid) {
                     $UnionidUser = $wechat_user->findUnionidUser($unionid);
                     $wechat_user->setEcjiaUserId($UnionidUser->ect_uid);
