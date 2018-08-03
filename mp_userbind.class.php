@@ -132,12 +132,14 @@ class mp_userbind extends PlatformAbstract
         //已经绑定用户
         if ($this->hasBindUser()) {
             $wechat_user = new WechatUser($wechat_id, $openid);
-            
+
             if ($wechat_user->getEcjiaUserId()) {
                 $userid = $wechat_user->getEcjiaUserId();
             } else {
                 $connect_user = $wechat_user->getConnectUser();
                 $userid = $connect_user->getUserId();
+                //更新wechat_user里的ect_id
+                $wechat_user->setEcjiaUserId($userid);
             }
 
             //获取用户名
