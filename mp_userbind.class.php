@@ -216,23 +216,6 @@ class mp_userbind extends PlatformAbstract
 
         return $content;
     }
-
-    /**
-     * 生成授权网址
-     */
-    public function authorize_url() {
-        $callback_url = '';
-        $state = md5(uniqid(rand(), TRUE));
-        $params = array(
-            'redirect_uri'  => $callback_url,
-            'scope'         => 'snsapi_userinfo',
-            'state'         => $state,
-        );
-        $_SESSION['wechat_login_state'] = $state;
-        $code_url = $this->oauth->getQRConnectCodeUrl($params);
-    
-        return $code_url;
-    }
     
 }
 
