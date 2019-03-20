@@ -52,6 +52,7 @@ Author: ECJIA TEAM
 Version: 1.18.0
 Author URI: http://www.ecjia.com/
 Plugin App: platform
+Text Domain: mp_userbind
 */
 defined('IN_ECJIA') or exit('No permission resources.');
 class plugin_mp_userbind {
