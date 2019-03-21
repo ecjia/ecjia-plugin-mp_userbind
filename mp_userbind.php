@@ -73,6 +73,7 @@ class plugin_mp_userbind {
 }
 
 Ecjia_PluginManager::extend('mp_userbind', function() {
+    RC_Locale::loadPluginTextdomain('mp_userbind');
     require_once RC_Plugin::plugin_dir_path(__FILE__) . 'mp_userbind.class.php';
     return new mp_userbind();
 });
