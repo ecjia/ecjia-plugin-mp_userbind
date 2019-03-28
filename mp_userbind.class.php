@@ -187,7 +187,7 @@ class mp_userbind extends PlatformAbstract
             $username = RC_DB::TABLE('users')->where('user_id', $userid)->pluck('user_name');
             $content = [
                 'title' => __('已绑定', 'mp_userbind'),
-                'description' => '您已拥有帐号，用户名为【'.$username.'】点击该链接可进入用户中心哦',
+                'description' => sprintf(__('您已拥有帐号，用户名为【%s】点击该链接可进入用户中心哦', 'mp_userbind'), $username),
                 'url' => RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid)),
                 'image' => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
             ];
