@@ -134,16 +134,16 @@ class mp_userbind extends PlatformAbstract
             $username = RC_DB::TABLE('users')->where('user_id', $userid)->pluck('user_name');
 
             $content = [
-                'title'       => __('已绑定', 'mp_userbind'),
+                'title' => __('已绑定', 'mp_userbind'),
                 'description' => sprintf(__('您已拥有帐号，用户名为【%s】点击该链接可进入用户中心哦', 'mp_userbind'), $username),
-                'url'         => RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid)),
-                'image'       => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
+                'url' => RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid)),
+                'image' => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
             ];
         }
         //未绑定用户
         else {
             $content = [
-                'title'       => __('未绑定', 'mp_userbind'),
+                'title' => __('未绑定', 'mp_userbind'),
                 'description' => __('抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作', 'mp_userbind'),
                 'url' => RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid)),
                 'image' => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
@@ -186,7 +186,7 @@ class mp_userbind extends PlatformAbstract
             //获取用户名
             $username = RC_DB::TABLE('users')->where('user_id', $userid)->pluck('user_name');
             $content = [
-                'title'       => __('已绑定', 'mp_userbind'),
+                'title' => __('已绑定', 'mp_userbind'),
                 'description' => sprintf(__('您已拥有帐号，用户名为【%s】点击该链接可进入用户中心哦', 'mp_userbind'), $username),
                 'url' => RC_Uri::url('wechat/mobile_profile/init', array('openid' => $openid, 'uuid' => $uuid)),
                 'image' => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
@@ -195,10 +195,10 @@ class mp_userbind extends PlatformAbstract
         //未绑定用户
         else {
             $content = [
-                'title'       => __('未绑定', 'mp_userbind'),
+                'title' => __('未绑定', 'mp_userbind'),
                 'description' => __('抱歉，目前您还未进行账号绑定，需点击该链接进行绑定操作', 'mp_userbind'),
-                'url'         => RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid)),
-                'image'       => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
+                'url' => RC_Uri::url('wechat/mobile_userbind/init',array('openid' => $openid, 'uuid' => $uuid)),
+                'image' => RC_Plugin::plugin_dir_url(__FILE__) . '/images/wechat_thumb_userbind.png',
             ];
         }
 
