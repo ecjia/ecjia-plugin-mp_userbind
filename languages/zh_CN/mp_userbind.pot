@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 用户绑定 1.18.0\n"
 "Report-Msgid-Bugs-To: https://www.ecjia.com/support/plugin/\n"
-"POT-Creation-Date: 2019-03-22 03:53:37+00:00\n"
+"POT-Creation-Date: 2019-03-29 01:42:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,7 +16,7 @@ msgstr ""
 msgid "已绑定"
 msgstr ""
 
-#: mp_userbind.class.php:138
+#: mp_userbind.class.php:138 mp_userbind.class.php:190
 msgid "您已拥有帐号，用户名为【%s】点击该链接可进入用户中心哦"
 msgstr ""
 
